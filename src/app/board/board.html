@@ -1,0 +1,17 @@
+<div class="board">
+  <div class="row" *ngFor="let row of board">
+    <div
+        class="tile"
+        *ngFor="let tile of row"
+        [class.revealed]="tile.isRevealed"
+        (click)="revealTile(tile)"
+        (contextmenu)="toggleFlag($event, tile)"
+    >
+        <span *ngIf="tile.isFlagged">🚩</span>
+        <span *ngIf="tile.isRevealed && tile.isMine">💣</span>
+        <span *ngIf="tile.isRevealed && !tile.isMine">
+            {{ tile.adjacentMines || '' }}
+        </span>
+    </div>
+  </div>
+</div>

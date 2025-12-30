@@ -1,0 +1,13 @@
+<div
+  class="tile"
+  [class.revealed]="tile.isRevealed"
+  (click)="onLeftClick()"
+  (contextmenu)="onRightClick($event)">
+
+  <span *ngIf="tile.isFlagged">🚩</span>
+  <span *ngIf="tile.isRevealed && tile.isMine">💣</span>
+  <span *ngIf="tile.isRevealed && !tile.isMine">
+    {{ tile.adjacentMines || '' }}
+  </span>
+
+</div>
