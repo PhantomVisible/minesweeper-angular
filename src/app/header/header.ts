@@ -1,11 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-header',
-  imports: [],
   templateUrl: './header.html',
-  styleUrl: './header.css',
+  styleUrls: ['./header.css']
 })
 export class Header {
+  @Output() difficultyChanged = new EventEmitter<'easy' | 'medium' | 'hard'>();
 
+  setDifficulty(level: 'easy' | 'medium' | 'hard') {
+    this.difficultyChanged.emit(level);
+  }
 }

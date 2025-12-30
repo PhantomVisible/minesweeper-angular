@@ -1,6 +1,8 @@
 <div
   class="tile"
   [class.revealed]="tile.isRevealed"
+  [style.width.px]="tileSize"
+  [style.height.px]="tileSize"
   (click)="onLeftClick()"
   (contextmenu)="onRightClick($event)">
 
@@ -10,4 +12,9 @@
     {{ tile.adjacentMines || '' }}
   </span>
 
+  
+
 </div>
+
+
+
