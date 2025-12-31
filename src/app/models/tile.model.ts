@@ -1,8 +1,8 @@
 export interface Tile {
-  row: number;
   col: number;
-  isMine: boolean;
-  isRevealed: boolean;
-  isFlagged: boolean;
-  adjacentMines: number;
+  row: number;
+  flagged: boolean;
+  revealed: boolean;
+  isMine?: boolean;
+  adjacentMines?: number;
 }
