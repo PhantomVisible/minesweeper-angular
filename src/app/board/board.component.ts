@@ -8,13 +8,16 @@ import { Tile } from '../models/tile.model';
   standalone: true,
   imports: [CommonModule, TileComponent],
   template: `
+    <div class="difficulty-buttons">
+      <button (click)="setDifficulty('easy')">Easy</button>
+      <button (click)="setDifficulty('medium')">Medium</button>
+      <button (click)="setDifficulty('hard')">Hard</button>
+    </div>
+
     <div class="board">
-      <app-tile 
-        *ngFor="let tile of tiles.flat()" 
-        [tile]="tile" 
-        (tileClicked)="revealTile($event)" 
-        (tileFlagged)="toggleFlag($event)">
-      </app-tile>
+      <div *ngFor="let row of tiles" class="row">
+        <app-tile *ngFor="let tile of row" [tile]="tile"></app-tile>
+      </div>
     </div>
   `,
   styles: [`
@@ -22,6 +25,15 @@ import { Tile } from '../models/tile.model';
       display: grid;
       grid-template-columns: repeat(8, 40px);
       gap: 4px;
+    }
+    .difficulty-buttons {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .difficulty-buttons button {
+      padding: 6px 12px;
+      cursor: pointer;
     }
   `]
 })
@@ -51,11 +63,23 @@ export class BoardComponent {
       }
       this.tiles.push(row);
     }
-    this.placeMines();
+    this.placeMines(this.mineCount);
     this.calculateAdjacentMines();
   }
 
-  placeMines() {
+  setDifficulty(level: 'easy' | 'medium' | 'hard') {
+  switch (level) {
+    case 'easy':
+      this.rows = 6; this.cols = 6; this.mineCount = 4; break;
+    case 'medium':
+      this.rows = 8; this.cols = 8; this.mineCount = 10; break;
+    case 'hard':
+      this.rows = 12; this.cols = 12; this.mineCount = 25; break;
+  }
+  this.createBoard();
+  }
+
+  placeMines(mineCount: number) {
     let minesLeft = this.mineCount;
     while (minesLeft > 0) {
       const r = Math.floor(Math.random() * this.rows);
